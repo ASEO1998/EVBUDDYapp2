@@ -16,7 +16,7 @@ import org.json.JSONObject
 class ChargerLocationVolley {
 
     @OptIn(UnstableApi::class)
-    fun fetchEVChargers(context: Context,latitude: Double, longitude: Double,distance: Int) {
+    fun fetchEVChargers(context: MainActivity,latitude: Double, longitude: Double,distance: Int) {
         //val url = "https://api.openchargemap.io/v3/poi/?output=json&countrycode=US&maxresults=100&key=YOUR_API_KEY"
 
 
@@ -40,8 +40,10 @@ class ChargerLocationVolley {
                         val title = addressInfo.getString("Title")
 
                         // You can now use these values to drop markers on a map
-                        Log.d("EV Charger", "Name: $title, Lat: $latitude, Lng: $longitude")
+                        Log.d("EV Charger Volley", "Name: $title, Lat: $latitude, Lng: $longitude")
+
                     }
+                    context.placeMarkers(jsonArray)
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }

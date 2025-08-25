@@ -6,8 +6,23 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.core.app.ActivityCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import org.json.JSONArray
+
+import android.Manifest
+import android.content.pm.PackageManager
+import android.location.Location
+import android.os.Looper
+import android.util.Log
+import androidx.annotation.RequiresPermission
+
+import androidx.core.content.ContextCompat
+import com.google.android.gms.location.LocationServices
+
+//import com.google.android.gms.location.*
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -20,12 +35,41 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
     }
 
+    @RequiresPermission(allOf = [Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION])
     fun findEV(v : View){
-        val ChargerFind = ChargerLocationVolley()
-        ChargerFind.fetchEVChargers(this,36.033, -86.782,100)
+
+        ActivityCompat.requestPermissions(
+            this,
+            arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+            111
+        )
+
+        val fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+
+        fusedLocationClient.lastLocation
+            .addOnSuccessListener { location: Location? ->
+                if (location != null) {
+                    val latitude = location.latitude
+                    val longitude = location.longitude
+                    Log.d("Location", "Lat: $latitude, Lng: $longitude")
+                    val ChargerFind = ChargerLocationVolley()
+                    ChargerFind.fetchEVChargers(this,latitude, longitude,100)
+                } else {
+                    Log.d("Location", "Location is null")
+                }
+            }
+
     }
+
+    fun placeMarkers(array: JSONArray){
+
+
+    }
+
+
 
 
 }
