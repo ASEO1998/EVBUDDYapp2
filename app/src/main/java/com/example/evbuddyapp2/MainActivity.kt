@@ -16,15 +16,25 @@ import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Looper
 import android.util.Log
+import android.widget.Button
 import androidx.annotation.RequiresPermission
+import androidx.constraintlayout.widget.ConstraintLayout
 
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.location.LocationServices
+import androidx.core.view.isVisible
+
 
 //import com.google.android.gms.location.*
 
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var buttonMobileDriver: Button
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,6 +45,25 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        recyclerView = findViewById(R.id.driver_list)
+        buttonMobileDriver = findViewById(R.id.button2)
+
+//        buttonMobileDriver.setOnClickListener {
+//            val mockDrivers = listOf(
+//                Driver("Alex Johnson", "1.2 km", "5 min", 4.5f),
+//                Driver("Maria Chen", "2.5 km", "8 min", 4.8f),
+//                Driver("Samir Patel", "3.1 km", "10 min", 4.2f)
+//            )
+//
+//            recyclerView.layoutManager = LinearLayoutManager(this)
+//            recyclerView.adapter = DriverAdapter(mockDrivers)
+//            recyclerView.visibility = View.VISIBLE
+//        }
+
+
+
+
 
     }
 
@@ -65,6 +94,29 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun placeMarkers(array: JSONArray){
+
+
+    }
+
+    fun mockDriver(v:View){
+
+        if (recyclerView.isVisible) {
+            recyclerView.visibility = View.GONE
+            buttonMobileDriver.text = "Find Mobile Power Driver"
+        }
+        else{
+            val mockDrivers = listOf(
+                Driver("Alex Johnson", "1.2 km", "5 min", 4.5f),
+                Driver("Maria Chen", "2.5 km", "8 min", 4.8f),
+                Driver("Samir Patel", "3.1 km", "10 min", 4.2f)
+            )
+
+            buttonMobileDriver.text = "Exit Out of Driver List"
+
+            recyclerView.layoutManager = LinearLayoutManager(this)
+            recyclerView.adapter = DriverAdapter(mockDrivers)
+            recyclerView.visibility = View.VISIBLE
+        }
 
 
     }
