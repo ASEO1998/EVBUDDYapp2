@@ -16,7 +16,7 @@ import org.json.JSONObject
 class ChargerLocationVolley {
 
     @OptIn(UnstableApi::class)
-    fun fetchEVChargers(context: Context,latitude: Long, longitude: Long,distance: Int) {
+    fun fetchEVChargers(context: Context,latitude: Double, longitude: Double,distance: Int) {
         //val url = "https://api.openchargemap.io/v3/poi/?output=json&countrycode=US&maxresults=100&key=YOUR_API_KEY"
 
 
